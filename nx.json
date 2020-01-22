@@ -9,33 +9,25 @@
   },
   "projects": {
     "stocks-data-access-price-query": {
-      "tags": [
-        "type:data-access",
-        "scope:stocks"
-      ]
+      "tags": ["platform:client", "type:data-access", "scope:stocks"]
     },
     "stocks": {
-      "tags": []
+      "tags": ["platform:client", "scope:stocks", "type:app"]
     },
     "stocks-e2e": {
-      "tags": []
+      "tags": ["scope:stocks", "type:app"]
     },
     "stocks-feature-shell": {
-      "tags": [
-        "scope:stocks",
-        "type:feature"
-      ]
+      "tags": ["platform:client", "scope:stocks", "type:feature"]
     },
     "shared-ui-chart": {
-      "tags": []
+      "tags": ["platform:client", "scope:shared", "type:ui"]
     },
     "stocks-data-access-app-config": {
-      "tags": []
+      "tags": ["platform:client", "scope:stocks", "type:util"]
     },
     "stocks-api": {
-      "tags": [
-        "platform:server"
-      ]
+      "tags": ["platform:server", "scope:stocks", "type:app"]
     }
   }
 }
