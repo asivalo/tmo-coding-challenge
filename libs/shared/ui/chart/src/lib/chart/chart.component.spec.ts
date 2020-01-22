@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChartComponent } from './chart.component';
+import { GoogleChartsModule } from 'angular-google-charts';
+import { of } from 'rxjs';
 
 describe('ChartComponent', () => {
   let component: ChartComponent;
@@ -8,14 +10,15 @@ describe('ChartComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChartComponent ]
-    })
-    .compileComponents();
+      declarations: [ChartComponent],
+      imports: [GoogleChartsModule]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ChartComponent);
     component = fixture.componentInstance;
+    (component as any).data$ = of({ subscribe: () => {} });
     fixture.detectChanges();
   });
 
