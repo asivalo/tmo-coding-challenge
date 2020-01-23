@@ -18,16 +18,46 @@
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Favorite time period</mat-label>
-    <mat-select formControlName="period">
-      <mat-option
-        *ngFor="let timePeriod of timePeriods"
-        [value]="timePeriod.value"
+    <mat-label>Favorite time period: From</mat-label>
+    <input
+      matInput
+      [max]="currentDate"
+      [matDatepicker]="pickerStart"
+      placeholder="Favorite time period"
+      formControlName="startDate"
+    />
+    <mat-datepicker-toggle
+      matSuffix
+      [for]="pickerStart"
+    ></mat-datepicker-toggle>
+    <mat-datepicker #pickerStart></mat-datepicker>
+    <mat-error
+      ><span *ngIf="stockPickerForm.get('startDate').invalid"
+        >Please enter valid start date</span
       >
-        {{ timePeriod.viewValue }}
-      </mat-option>
-    </mat-select>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Favorite time period: To</mat-label>
+    <input
+      matInput
+      [min]="startDate"
+      [max]="currentDate"
+      [matDatepicker]="pickerEnd"
+      placeholder="Favorite time period"
+      formControlName="endDate"
+    />
+    <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+    <mat-datepicker #pickerEnd></mat-datepicker>
+    <mat-error
+      ><span *ngIf="stockPickerForm.get('endDate').invalid"
+        >Please enter valid end date</span
+      >
+    </mat-error>
   </mat-form-field>
 </form>
 
-<coding-challenge-chart [data$]="quotes$"></coding-challenge-chart>
+<coding-challenge-chart
+  [data$]="quotes$"
+  *ngIf="quotes$"
+></coding-challenge-chart>

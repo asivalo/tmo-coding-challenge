@@ -6,7 +6,10 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatSelectModule,
-  MatButtonModule
+  MatButtonModule,
+  MatOptionModule,
+  MatDatepickerModule,
+  MatNativeDateModule
 } from '@angular/material';
 import { of } from 'rxjs';
 import { StoreModule } from '@ngrx/store';
@@ -18,6 +21,7 @@ describe('StocksComponent', () => {
   let component: StocksComponent;
   let fixture: ComponentFixture<StocksComponent>;
   const fetchQuoteMock: jest.Mock<any> = jest.fn(() => of({}));
+  const priceQueriesWithFilterMock: jest.Mock<any> = jest.fn(() => of({}));
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -26,8 +30,11 @@ describe('StocksComponent', () => {
         ReactiveFormsModule,
         MatFormFieldModule,
         MatInputModule,
+        MatOptionModule,
         MatSelectModule,
         MatButtonModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
         StoreModule,
         NoopAnimationsModule
       ],
@@ -36,7 +43,8 @@ describe('StocksComponent', () => {
         {
           provide: PriceQueryFacade,
           useValue: {
-            fetchQuote: fetchQuoteMock
+            fetchQuote: fetchQuoteMock,
+            priceQueriesWithFilter: priceQueriesWithFilterMock
           }
         }
       ]
@@ -56,7 +64,9 @@ describe('StocksComponent', () => {
   it('should call fetchQuote when fetchQuote() is invoked', () => {
     component.ngOnInit();
     component.stockPickerForm.controls['symbol'].setValue('AAPL');
-    component.stockPickerForm.controls['period'].setValue('5y');
+    component.stockPickerForm.controls['startDate'].setValue(new Date());
+    component.stockPickerForm.controls['endDate'].setValue(new Date());
     expect(fetchQuoteMock).toHaveBeenCalled();
+    expect(priceQueriesWithFilterMock).toHaveBeenCalled();
   });
 });
