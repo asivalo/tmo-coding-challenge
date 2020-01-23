@@ -4,20 +4,24 @@
  **/
 import { Server } from 'hapi';
 
+import { stocksPlugin, stocksApi } from '../src/app/stocksplugin';
+
 const init = async () => {
   const server = new Server({
     port: 3333,
     host: 'localhost'
   });
 
-  server.route({
-    method: 'GET',
-    path: '/',
-    handler: (request, h) => {
-      return {
-        hello: 'world'
-      };
-    }
+  server.method('stocksApi', stocksApi, {
+    cache: {
+      expiresIn: 1 * 24 * 60 * 60 * 1000,
+      generateTimeout: 2000
+    },
+    generateKey: (symbol, period) => symbol + ':' + period
+  });
+
+  await server.register({
+    plugin: stocksPlugin
   });
 
   await server.start();
